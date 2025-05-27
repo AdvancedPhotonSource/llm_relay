@@ -24,8 +24,14 @@ OPENROUTER_API_KEY=your_api_key_here
 
 Start the server with:
 ```bash
+python main.py
+```
+or
+```bash
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
+
+Add `--debug` flag to show HTTP payloads.
 
 The server will be available at `http://your_server_ip:8000`.
 
