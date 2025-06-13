@@ -37,7 +37,6 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 if not OPENROUTER_API_KEY:
     raise ValueError("OPENROUTER_API_KEY environment variable is not set")
 
-OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "openai/gpt-3.5-turbo")
 
 
@@ -71,7 +70,7 @@ async def forward_request(endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]
     async with httpx.AsyncClient() as client:
         try:
             response = await client.post(
-                f"{OPENROUTER_BASE_URL}/{endpoint}",
+                f"{base_url}/{endpoint}",
                 json=data,
                 headers=headers
             )
@@ -120,8 +119,11 @@ if __name__ == "__main__":
     
     # Parse command line arguments
     parser = argparse.ArgumentParser(description='LLM Relay Server')
-    parser.add_argument('--debug', action='store_true', help='Enable debug mode with detailed logging')
+    parser.add_argument("--base-url", type=str, default="https://openrouter.ai/api/v1", help="Base URL for OpenRouter API")
+    parser.add_argument("--debug", action="store_true", help="Enable debug mode with detailed logging")
     args = parser.parse_args()
+    
+    base_url = args.base_url
     
     # Set logging level based on debug flag
     if args.debug:

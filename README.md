@@ -31,6 +31,9 @@ or
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
+You can also set the `--base-url` flag to a specific base URL. 
+By default, it is the default URL of OpenRouter.
+
 Add `--debug` flag to show HTTP payloads.
 
 The server will be available at `http://your_server_ip:8000`.
