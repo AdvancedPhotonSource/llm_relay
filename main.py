@@ -33,9 +33,9 @@ app.add_middleware(
 )
 
 # OpenRouter API configuration
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-if not OPENROUTER_API_KEY:
-    raise ValueError("OPENROUTER_API_KEY environment variable is not set")
+LLM_RELAY_API_KEY = os.getenv("LLM_RELAY_API_KEY")
+if not LLM_RELAY_API_KEY:
+    raise ValueError("LLM_RELAY_API_KEY environment variable is not set")
 
 DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "openai/gpt-3.5-turbo")
 
@@ -62,7 +62,7 @@ class CompletionRequest(BaseModel):
 async def forward_request(endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]:
     """Forward request to OpenRouter API"""
     headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Authorization": f"Bearer {LLM_RELAY_API_KEY}",
         "HTTP-Referer": "https://github.com/yourusername/llm-relay",  # Replace with your actual repository
         "X-Title": "LLM Relay Server"
     }
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     
     # Parse command line arguments
     parser = argparse.ArgumentParser(description='LLM Relay Server')
-    parser.add_argument("--base-url", type=str, default="https://openrouter.ai/api/v1", help="Base URL for OpenRouter API")
+    parser.add_argument("--base-url", type=str, default="https://api.openai.com/v1", help="Base URL of the endpoint")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode with detailed logging")
     args = parser.parse_args()
     
